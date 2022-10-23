@@ -1,0 +1,25 @@
+from enum import Enum
+
+
+class OpCode(Enum):
+    AUIPC = "0010111"
+    LUI = "0110111"
+    JALR = "1100111"
+    JAL = "1101111"
+    B_TYPE = "1100011"
+    I_TYPE = "0000011"
+    S_TYPE = "0100011"
+    S_TYPE_F = "0100111"
+    U_TYPE = "1110011"
+    I_TYPE_A = "0010011"
+    I_TYPE_B = "0011011"
+    I_TYPE_F = "0000111"
+    I_TYPE_FEN = "0001111"
+    R4_TYPE_FMADD = "1000011"
+    R4_TYPE_FNMADD = "1001111"
+    R4_TYPE_FMSUB = "1000111"
+    R4_TYPE_FNMSUB = "1001011"
+    R_TYPE = "0110011"
+    R_TYPE_F = "1010011"
+    R_TYPE_W = "0111011"
+    R_TYPE_AMO = "0101111"
