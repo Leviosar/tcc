@@ -34,11 +34,12 @@
 \usepackage[acronym,nowarn]{glossaries}
 \glsdisablehyper
 \usepackage{lipsum}				% para geração de dummy text
-\usepackage[alf]{abntex2cite}
-\usepackage[natbib=true,bibstyle=numeric,citestyle=numeric,maxbibnames=10,doi=true]{biblatex}
 \usepackage{enumitem}
 \usepackage{scalerel,amssymb}
 
+\usepackage[alf]{abntex2cite}
+\usepackage{biblatex}
+\addbibresource{main.bib}
 
 \input{acronyms}
 \setlist[enumerate,1]{%
@@ -50,7 +51,6 @@
   label=(\roman*),
 }
 
-\addbibresource{references.bib}
 % \AtEveryBibitem{% Clean up the bibtex rather than editing it
 %     % \clearlist{address}
 %     \clearfield{date}
@@ -92,6 +92,7 @@
 \input{content/sections/6-human-resources}
 \input{content/sections/7-comunication}
 \input{content/sections/8-risks}
+
 %\renewcommand*{\bibfont}{\scriptsize}
 \printbibliography
 

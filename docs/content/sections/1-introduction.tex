@@ -2,7 +2,30 @@
 \section{Introdução}
 \label{sec.intro}
 
-A crescente disseminação de computadores a partir do século 20 recuperou diversas técnicas analógicas que predatam a área da computação, aprimorando 
+Esteganografia é a nomenclatura utilizada para um conjunto de técnicas, inicialmente desenvolvidas para espionagem, que atuam escondendo uma informação dentro de uma outra mídia, de modo que a mídia criada após a manipulação seja visualmente indistinguível da original para um observador externo.
 
-% Exemplo de citação
-~\cite{avila2013brasil}
+A crescente disseminação de computadores a partir do século 20 recuperou diversas técnicas analógicas de espionagem que predatam a área da computação, adicionando o poder de processamento digital para aprimorar a efetividade e as aplicações de tais técnicas. Notóriamente temos a criptografia como a principal expoente dessa transformação, estando presente na maior parte das aplicações modernas. Apesar de ser o maior caso a criptografia não foi a única área a passar por isso, as técnicas de esteganografia também foram afetadas pela introdução do fator digital \cite{JohnsonJajodia}.
+
+% Acho que essa parte aqui toda é desnecessária
+% Existem diversos registros anteriores à computação do uso de esteganografia no contexto de espionagem, sendo um dos mais recentes e famosos durante a Segunda Guerra Mundial, com um espião alemão tendo enviado a mensagem:
+
+% "Apparently neutral’s protest is thoroughly discounted and ignored. Isman hard hit. Blockade issue affects pretext for embargo on by-products, ejecting suets and vegetable oils."
+
+% Ao extrairmos a segunda letra de cada palavra dessa frase em sequência, é formada uma nova mensagem: "Pershing sails from NY June 1". Para um observador que busca por mensagens escondidas, essa técnica possui sofisticação baixa, porém assim como as técnicas de criptografia evoluiram desde a Cifra de César, a complexidade da esteganografia cresceu em conjunto com o poder computacional.
+% Acho que essa parte aqui toda é desnecessária
+
+Representações digitais de mídias diversas permitem que a informação seja processada e escondida de formas que uma mídia física por sua natureza não conseguiria suportar, fornecendo uma gama maior de técnicas e aplicações esteganográficas, além de permitir a combinação das técnicas mais modernas de criptografia para esconder uma mensagem cifrada.
+
+As novas técnicas esteganográficas desenvolvidas no meio digital circulam por diversas áreas da computação, nos últimos anos destaca-se o uso no ramo de marcas d'água digitais, onde são inseridas no arquivo informações para ajudar na verificação de sua integridade, autenticidade e dados autorais.
+
+Nessas aplicações, os dados embutidos não são necessariamente secretos portanto a invisibilidade nesses casos é apenas uma propriedade opcional do algoritmo e outros fatores surgem como prioridade. Uma dessas novas características que ganham destaque é a capacidade de resistir a ataques de distorção do arquivo, mantendo os dados embutidos seguros de um atacante que queira danificar a integridade do arquivo fonte.
+
+Apesar de o comum ser utilizar tais técnicas em imagens, áudios e outros formatos de mídia de uso geral, os mesmos conceitos podem ser aplicados para qualquer formato de arquivo que contenha informação, ajustando ou criando novos algoritmos. Uma aplicação pouco explorada atualmente é a esteganografia em arquivos de código binário, que poderia ser utilizada tanto para transmissão de mensagens secretas quanto para marcas d'água digitais em software.
+
+Os softwares que consumimos diariamente muitas vezes são compilados em arquivos binários que codificam as linhas de código fonte em instruções binárias compreendidas pelo processador alvo, esses arquivos compilados também possuem extensões e formatos, sendo os principais formatos utilizados o \textbf{ELF (Executable Linkable File)} e \textbf{EXE}, sendo que o último possuí diversas versões.
+
+Tendo em vista a atual falta de algoritmos específicos para a utilização de arquivos binários de código fonte como estego-objetos, esse trabalho se propõe a desenvolver um algoritmo que atenda aos requisitos necessários para esse objetivo.
+
+O algoritmo proposto se baseia na modificação do arquivo após a compilação, aproveitando de brechas na arquitetura alvo para codificar informação dentro das próprias instruções do programa, sem alterar a semântica inicial do código em nenhuma forma. Por aplicar as transforações após o processo de compilação, não é necessário a preocupação com a linguagem de programação do código fonte, tampouco com qual o compilador utilizado, melhorando a portabilidade do algoritmo.
+
+Para o escopo inicial dessa implementação, será utilizada como alvo a arquitetura RISC-V por possuir uma especificação aberta e um conjunto de instruções reduzido, entretanto os conceitos utilizados podem ser adaptados para algumas outras arquiteturas seguindo a especificação. Como formato de arquivo, o \textbf{ELF} foi escolhido por possuir um conjunto maior e mais acessível de ferramentas para uso e compilação na plataforma RISC-V.
