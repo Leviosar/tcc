@@ -1,11 +1,25 @@
 from arch.common.isa.decoder import Decoder
 from enums.riscv.isa import OpCode
+from .instructions import Instruction, BType, IType, JType, RType, SType, UType, CType
+from typing import List
 
 class RiscVDecoder(Decoder):
-    def decode(self, source: bytes) -> str:
+    def decode(self, source: bytes):
         binary = bin(int.from_bytes(source, 'little'))
 
+        types: List[Instruction] = [
+            BType, IType, JType, RType, SType, UType
+        ]
+
         opcode = binary[-7:]
+        for type in types:
+            if  opcode in type.opcodes:
+                instruction = type(binary)
+
+                return instruction
+        else:
+            raise ValueError("Unsupported instruction type")
+
 
         match opcode:
             case OpCode.AUIPC:

@@ -1,5 +1,6 @@
 from struct import *
 from arch.riscv.isa.instruction import Instruction
+from arch.riscv.isa.decoder import RiscVDecoder
 from elf import ElfHeader
 from elf.sections import SectionHeader
 from elf.segments import ProgramHeader
@@ -60,7 +61,7 @@ with open('./main', 'rb+') as fp:
         section_header.parse(fp)
         
         name = string_table.get(section_header['sh_name'])
-        
+
         if name is not None and name.decode('utf-8') == '.text':
             print('Found code section')
             print(f"File offset: {section_header['sh_offset']}")
@@ -78,8 +79,15 @@ with open('./main', 'rb+') as fp:
                 
                 print(f"{j:08x}: {instruction:08x}")
                 
-                if (instruction == 65537):
-                    print(Instruction(b_instruction).decode())
+                try:
+                    decoded_instruction = RiscVDecoder().decode(b_instruction)
+                    print(decoded_instruction)
+                except ValueError:
+                    print(f"Unsupported {bin(int.from_bytes(b_instruction, 'little'))}")
+                    pass
+                
+                # if (instruction == 65537):
+                    # print(Instruction(b_instruction).decode())
                     # fp.seek(-4, 1)
                     # fp.write(b'\x00\x02\x00\x02')
                 j += 4

@@ -1,0 +1,1 @@
+Foi necessário escrever um parser de ELF em Python para manipular de forma eficiente os arquivos binários que o projeto utiliza.
