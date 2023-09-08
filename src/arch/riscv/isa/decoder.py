@@ -4,16 +4,19 @@ from .instructions import Instruction, BType, IType, JType, RType, SType, UType,
 from typing import List
 
 class RiscVDecoder(Decoder):
-    def decode(self, source: bytes):
+    def decode(self, source: bytes) -> Instruction:
         binary = bin(int.from_bytes(source, 'little'))
 
-        types: List[Instruction] = [
-            BType, IType, JType, RType, SType, UType
+        types = [
+            BType, IType, JType, RType, SType, UType, CType
         ]
 
         opcode = binary[-7:]
+        opcode = opcode.replace("0b", "")
+        opcode = opcode.rjust(7, "0")
+        
         for type in types:
-            if  opcode in type.opcodes:
+            if opcode in type.opcodes:
                 instruction = type(binary)
 
                 return instruction

@@ -2,9 +2,25 @@ from .instruction import Instruction, Field
 from utils.binary_manipulation import twos_comp
 
 class CType(Instruction):
+    """C (compact) extension for RV, 16 bit instructions used for code size optimization. All instructions from RV
+    "default size" ISA have opcodes ending with '11', and the C extension uses 00, 01 and 10 opcode LSBs to determine
+    a quadrant for the instruction
 
+    Args:
+        Instruction (_type_): _description_
+
+    Raises:
+        ValueError: _description_
+
+    Returns:
+        _type_: _description_
+    """
     # CHECK
     opcodes = ['00', '01', '10']
+    
+    quadrants = [
+        
+    ]
 
     # 'c.lwsp':   { isa: 'C',  xlens: 0b111, fmt: 'CI-type', funct3: '010', rdRs1Mask: 0b10, rdRs1Excl: [0], uimm: true, immBits: [[5], [[4,2],[7,6]]], opcode: C_OPCODE.C2 },
     # 'c.ldsp':   { isa: 'C',  xlens: 0b110, fmt: 'CI-type', funct3: '011', rdRs1Mask: 0b10, rdRs1Excl: [0], uimm: true, immBits: [[5], [[4,3],[8,6]]], opcode: C_OPCODE.C2 },
@@ -178,6 +194,15 @@ class CType(Instruction):
         super().__init__(source)
 
     def asm(self):
+        opcode = self.get('opcode')
+        
+        funct = self.get('funct')
+        
+        register = self.get('rd/rs1')
+        
+        if opcode == '01' and funct == '000' and register == '00000':
+            return 'c.nop'
+        
         concat =  self.get('imm')
 
         immediate = twos_comp(int(concat, 2), len(concat))

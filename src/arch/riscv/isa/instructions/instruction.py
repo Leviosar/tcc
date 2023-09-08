@@ -1,4 +1,4 @@
-from typing import List, Optional
+from typing import List, Optional, Literal
 from dataclasses import dataclass
 
 @dataclass
@@ -11,19 +11,47 @@ class Field:
 class Instruction:
     opcodes: List[str]
 
+    source: str
+    
     fields: List[Field]
 
+    def bin(self, endianess: Literal["little", "big"] = "little"):
+        return int(0).to_bytes(4, endianess)
+    
+    
     def get(self, needle):
         return next(filter(lambda field: field.name == needle, self.fields)).value
+    
+    
+    def set(self, needle: str, value: str):
+        if (value == ''):
+            value = '0'
+                
+        field = next(filter(lambda field: field.name == needle, self.fields)) 
+        
+        if field.value is None:
+            field.value = '0'
+            
+        field.value = value.rjust(field.size, '0')
+        
+        return value
+
 
     def __init__(self, source: str):
+        self.source = source
+        
         reverse = source[::-1]
         reverse = reverse.replace('b0', '')
-        print('fonte')
-        print(reverse)
-        print('campos')
+        # print('fonte')
+        # print(reverse)
+        # print('campos')
         for field in self.fields:
             # bin(int.from_bytes(source, 'little'))
-            print(field.name)
+            # print(field.name)
             field.value = reverse[field.start : field.start + field.size][::-1]
-            print(field.value)
+            
+            if (field.value == ''):
+                field.value = '0'
+            
+            field.value = field.value.rjust(field.size, "0")
+            # print(field.value)

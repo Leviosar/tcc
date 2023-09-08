@@ -1,5 +1,6 @@
 from .instruction import Instruction, Field
 from utils.binary_manipulation import twos_comp
+from typing import Literal
 
 class IType(Instruction):
 
@@ -58,10 +59,9 @@ class IType(Instruction):
         super().__init__(source)
 
     def asm(self):
-        print('INSTRUÇÃO TIPO I')
-        concat =  self.get('imm')
-
+        concat = self.get('imm')
         immediate = twos_comp(int(concat, 2), len(concat))
+        immediate = int(concat, 2)
         
         target_register = int(self.get('rd'), 2)
         
@@ -72,7 +72,15 @@ class IType(Instruction):
         except KeyError:
             raise ValueError("Unsupported instruction")
 
-        return f"{instruction} x{target_register}, x{source_register} {immediate}"
+        return f"{instruction} x{target_register}, x{source_register}, {immediate}"
 
+    def bin(self, endianess: Literal["little", "big"] = "little") -> bytes:
+        rep = f"{self.get('imm')}{self.get('rs1')}{self.get('funct3')}{self.get('rd')}{self.get('opcode')}"
+        value = int(rep[::-1], 2)
+        return value.to_bytes(4, endianess)
+        
     def __repr__(self):
+        return self.asm()
+
+    def __str__(self):
         return self.asm()

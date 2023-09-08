@@ -22,6 +22,7 @@ class JType(Instruction):
     def asm(self):
         instructions = {
             '1101111': 'jal',
+            '1100111': 'j',
             'j': '1100111'
         }
 

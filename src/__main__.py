@@ -1,16 +1,28 @@
 from struct import *
 from arch.riscv.isa.instruction import Instruction
 from arch.riscv.isa.decoder import RiscVDecoder
+from arch.riscv.isa.encoder import RiscVEncoder
 from elf import ElfHeader
 from elf.sections import SectionHeader
 from elf.segments import ProgramHeader
 from enums.elf import BitFormat, MachineType, ProgramFlags, ProgramType
+import shutil
 
-with open('./main', 'rb+') as fp:
+import pdb
+
+outfile = './hello'
+filename = './output'
+# filename = './hello'
+# outfile = './output'
+# filename = './philosophers_dinner_(2)'
+# filename = './riscv32-unknown-elf-gcc' 
+
+# shutil.copyfile(filename, outfile)
+
+with open(filename, 'rb+') as fp:
     header = ElfHeader()
     
     header.parse(fp)
-    
     assert MachineType(header['e_machine']) == MachineType.RISCV
     assert BitFormat(header['e_bit_format']) == BitFormat.BIT_64
     
@@ -73,17 +85,35 @@ with open('./main', 'rb+') as fp:
             # Reads 32 bit for each instruction starting at sh_offset until shoffset + sh_size
             fp.seek(section_header['sh_offset'])
             j = 0
+            
+            total_instructions = 0
+            total_decoded_instructions = 0
+            total_target_instructions = 0
+            
             while j < section_header['sh_size']:
+                total_instructions += 1
                 b_instruction = fp.read(4)
                 instruction = int.from_bytes(b_instruction, 'little')
-                
                 print(f"{j:08x}: {instruction:08x}")
                 
                 try:
                     decoded_instruction = RiscVDecoder().decode(b_instruction)
-                    print(decoded_instruction)
+                    # if (decoded_instruction.get('funct3') == '000' and decoded_instruction.opcodes[0] == '0010011'):
+                    if (str(decoded_instruction) == "ADDI x0, x0, 0"):
+                        decoded_instruction.set('imm', '1')
+                        modified = RiscVEncoder().encode(decoded_instruction)
+                        
+                        position = fp.tell() - 4
+                        
+                        with open(outfile, 'rb+') as out:
+                            # shit not right
+                            out.seek(position)
+                            out.write(modified)
+                        
+                        
+                    total_decoded_instructions += 1
                 except ValueError:
-                    print(f"Unsupported {bin(int.from_bytes(b_instruction, 'little'))}")
+                    # print(f"Unsupported {bin(int.from_bytes(b_instruction, 'little'))}")
                     pass
                 
                 # if (instruction == 65537):
@@ -91,3 +121,7 @@ with open('./main', 'rb+') as fp:
                     # fp.seek(-4, 1)
                     # fp.write(b'\x00\x02\x00\x02')
                 j += 4
+            
+            print(f"Total instructions: {total_instructions}")
+            print(f"Total decoded instructions: {total_decoded_instructions}")
+            print(f"Decoding ratio: {(total_decoded_instructions / total_instructions) * 100}.2f %")
