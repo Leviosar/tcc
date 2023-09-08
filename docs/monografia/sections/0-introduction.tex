@@ -1,0 +1,35 @@
+\chapter{Introdução}
+
+\label{sec.intro}
+
+\section{Motivação}
+
+A democratização da Internet aumentou exponencialmente o uso de Internet no último século, afetando a vida cotidiana e corporativa das pessoas ~\cite{carneiro2022}, porém o aumento do uso da Internet contém consequências. Nos últimos anos problemas com ataques cibernéticos passaram a ser cada vez mais comuns ao redor do mundo e inclusive no Brasil  ~\cite{avila2013brasil}. Em contra ponto, políticas e leis tornam-se mais rigorosas quanto ao tratamento e a proteção de dados ~\cite{Neves_Lopes_Pavani_Sales_2021}, levando a segurança da informação e a segurança computacional a um novo nível de importância.
+
+Para prevenção contra infortúnios, muitas empresas estão utilizando técnicas de segurança ofensiva para monitorar o nível de segurança e aperfeiçoar suas defesas, já que é mais fácil corrigir uma vulnerabilidade ao ter o conhecimento dela ~\cite{vieira2018}. Existem, porém, complicações e barreiras no aprendizado de segurança ofensiva, uma vez que há uma linha tênue entre legalidade e ilegalidade quando se realiza testes em sites de terceiros.
+
+Visto a lacuna existente na área para aplicar o conhecimento teórico acerca de segurança ofensiva de forma prática, este trabalho se propõe a desenvolver um ambiente para aprendizado e prática de técnicas de segurança ofensiva em aplicações web vulneráveis. Ambiente este que será desenvolvido em Docker para facilitar a execução do mesmo em múltiplos Sistemas Operacionais, permitindo o estudo dessas técnicas sem necessidade de alocar tantos recursos computacionais como outros mecanismos de virtualização fazem ~\cite{8528247}.
+
+O ambiente proposto é constituído de uma imagem Docker contendo uma aplicação web que ficará disponível para acesso local, a aplicação conterá algumas falhas de segurança selecionadas, que em sua maioria podem ser encontradas no OWASP TOP 10:2021. O ambiente será construído em Docker para facilitar a instalação e otimizar a ocupação de recursos computacionais, uma vez que a maioria dos ambientes com vulnerabilidade estão disponíveis como imagens para Máquinas Virtuais.
+
+OWASP Top 10 que é um framework da OWASP, uma organização sem fins lucrativos, que traz informações sobre as falhas mais utilizadas em um determinado ano. Neste trabalho o OWASP Top 10 utilizado será do ano de 2021 ~\cite{url:OWASP}. Desta forma serão selecionadas falhas da OWASP Top 10:2021, pois como são frequentemente encontradas falhas novas de segurança  ~\cite{https://doi.org/10.48550/arxiv.2205.02544}, algumas técnicas passam a ser mais usadas e outras caem em desuso. Por isso, é importante para quem estuda tais técnicas praticar em falhas atuais.
+
+\section{Objetivos}
+
+\subsection{Objetivos gerais }
+
+Este trabalho visa realizar a implementação de um ambiente em Docker contendo aplicações web vulneráveis para facilitar o aprendizado e a prática legal de técnicas de segurança ofensiva.
+
+\subsection{Objetivos específicos}
+Os objetivos específicos que podem ser descritos são os seguintes:
+
+\begin{itemize}
+
+\item Elencar o estado da arte das vulnerabilidades em aplicações web;
+\item Selecionar as vulnerabilidades mais pertinentes para estudo\\por estudantes/profissionais interessados no atual estado da arte;
+\item Projetar e decidir as tecnologias utilizadas no desenvolvimento do ambiente a fim de que tenha os recursos necessários à execução das vulnerabilidades selecionadas;
+\item Desenvolver o ambiente de modo que sua instalação e uso por terceiros fique simplificada, deixando o foco da atividade no estudo das falhas propriamente dito.
+
+\end{itemize}
+
+%\section{Chapter Structure} %?

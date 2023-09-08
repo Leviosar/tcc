@@ -1,0 +1,146 @@
+\documentclass[embeddedlogo]{ufsc-thesis-rn46-2019}
+
+\usepackage[T1]{fontenc} % fontes
+\usepackage[utf8]{inputenc} % UTF-8
+\usepackage{lipsum} % Gerador de texto
+\usepackage{pdfpages} % Inclui PDF externo (ficha catalográfica)
+\usepackage{biblatex} %Imports biblatex package
+
+% Usado para mostrar código
+\usepackage{minted}
+\newmintinline[mt]{latex}{fontsize=\normalsize}
+\newmintinline[mft]{latex}{fontsize=\footnotesize}
+\setminted{fontsize=\tiny,linenos,xleftmargin=2em}
+\setmintedinline{breaklines,breakbytokenanywhere}
+
+% Usado para mostrar comandos latex nesse guia:
+\newcommand{\lacmd}[1]{\texttt{\textbackslash{}#1}}
+\newcommand{\laenv}[1]{\texttt{\textbackslash{}begin\{#1\}...\textbackslash{}end\{#1\}}}
+\newcommand{\laenvi}[2]{\texttt{\textbackslash{}begin\{#1\}[#2]...\textbackslash{}end\{#1\}}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Configurações da classe (dados do trabalho)                  %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Informações para capa e folha de rosto/certificacao
+
+% Caso o título contenha alguma porção LaTeX ilegível, defina um título
+% alternativo opcional com []'s para ser usado no campo Title do PDF
+% IMPORTANTE: Os títulos deveriam ser iguais. Apenas use um título
+% alternativo se o título não puder ser expresso com letras e números
+\titulo[Template \LaTeX{} com metadados]%
+       {Desenvolvimento de um Ambiente para Aprendizado e Prática de Técnicas de Segurança Ofensiva em Aplicações Web Vulneráveis}
+
+\autor{Samuel Cardoso}
+\data{2022} % ou \today
+\instituicao{Universidade Federal de Santa Catarina}
+\centro{Centro Tecnológico}
+\local{Florianópolis} % Apenas cidade! Sem estado
+%\programa{Programa de Pós-Graduação em Ciência da Computação}
+% Os dois próximos itens são usados para gerar o \preambulo
+\tcc % ou \dissertacao ou \tcc
+%\titulode{doutor em Ciência da Computação}
+
+%%% Atenção! No caso de TCC, além de usar \tcc, outros comandos devem ser fornecidos:
+%%%
+% \tcc
+\departamento{Departamento de Informática e Estatística}
+\curso{Ciências da Computação}
+\titulode{Bacharel em Ciência da Computação}
+% %% Para TCCs, orientadores e coorientadores podem ser externos, logo a
+% %% BU exige que sua afiliação seja explicitada. Por padrão, assume-se
+% %% UFSC. Você pode alterar a afiliação com os comandos abaixo:
+% \afiliacaoorientador{Universidade Federal de Santa Catarina}
+% \afiliacaocoorientador{Universidade Federal da Terra de Ninguém}
+
+% Orientador, coorientador, membros da banca e coordenador
+% As regras da BU agora exigem que Dr. apareça **depois** do nome
+% Dica: para gerar Profᵃ. use Prof\textsuperscript{a}.
+% Dica 2: para feminino use \orientadora e \coorientadora
+\orientadora{Prof. Carla Merkle Westphall, Dra.}
+%\coorientador{}
+\membrobanca{Fabricio Bortoluzzi}{Universidade Federal de Santa Catarina}
+\membrobanca{Rômulo Augusto Oliveira Cruz Bittencourt de Almeida}{Universidade Federal de Santa Catarina}
+%\membrobanca{Prof. Huifen Chan, Dr.}{Universidade Federal da Terra de Ninguém}
+% Dica: se feminino, \coordenadora
+\coordenador{Prof. Jean Everson Martina, Dr}
+
+\addbibresource{references.bib} %Import the bibliography file
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Principais elementos pré-textuais                            %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Inicia parte pré-textual do documento capa, folha de rosto, folha de
+% aprovação, aprovação, resumo, lista de tabelas, lista de figuras, etc.
+\pretextual%
+\imprimircapa%
+\imprimirfolhaderosto*
+% Atenção! \cleardoublepages são inseridos automaticamente
+% Atenção! esse \protect é importante
+%\protect\incluirfichacatalografica{ficha.pdf} ADICIONAR FICHA TECNICA - EU NÃO VOU LEMBRAR DE ADICIONAR ISSO AQUI E O JOSÉ IRÁ ME LEMBRAR DISSO. EU SOU TEIMOSO E DECIDI DEIXAR ESSE COMENTÁRIO MESMO ASSIM
+\imprimirfolhadecertificacao
+
+% Listas de "coisas". O * no final faz com que as listas não sejam 
+% incluídas como entratas do sumário (\tableofcontents)
+
+% \listoftables*
+% \listofalgorithms*
+% \listoffigures*
+% \tableofcontents*
+
+%\input{pre-sections/0-dedication.tex}
+%\input{pre-sections/1-acknowledgments.tex}
+%\input{pre-sections/2-epigraph.tex}
+\input{pre-sections/3-resumo.tex}
+%\input{pre-sections/4-resumoextendido.tex}
+\input{pre-sections/5-abstract.tex}
+
+\listoffigures*  % O * evita que apareça no sumário
+% \newpage
+% \input{pre-sections/7-acronym.tex}*
+
+%\input{pre-sections/6-symbols.tex}
+
+
+\tableofcontents*%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Corpo do texto                                               %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\textual%
+    
+\input{sections/0-introduction.tex}
+\input{sections/1-background.tex}
+\input{sections/2-vulnerabilidades.tex}
+\input{sections/3-development.tex}
+\input{sections/4-proposal}
+\input{sections/5-conclusion.tex}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Elementos pós-textuais                                       %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\postextual
+% \bibliography{references}
+\printbibliography[title={REFERÊNCIAS}]
+\end{document}
+
+
+
+
+% LocalWords:  pdf ufscthesisrn abntex PPGCC Zambonin pull request GitHub PRs
+% LocalWords:  alexishuf Issues alpha dropin template cls shellescape ZIP Git
+% LocalWords:  UNIXlike Makefile git submodule shame on you Overleaf english cd
+% LocalWords:  overview PósGraduação Prof BU pdfpages bug BibTeX URLs at bst or
+% LocalWords:  Available citealf url xurl brazil embeddedlogo autocontido pt
+% LocalWords:  lmodern arial opensource Latin Modern nocapautoref ufscthesis
+% LocalWords:  working directory pdflatex tex dijkstra diffie Saleem Ullman rdf
+% LocalWords:  magic Distefano Abiteboul Forgy default Word captions userguide
+% LocalWords:  noplainurl noabntexcite begin dedicatoria end doc abstracts EQM
+% LocalWords:  corretude indentação oneside memoir feature SAD EQD bookmarks of
+% LocalWords:  nopretextualbookmark listoffigures table contents logodir OUTDIR
+% LocalWords:  jobname jobname-logo latexmkoutdir outdir latexmk filecontents
+% LocalWords:  write thesis such main

@@ -1,0 +1,124 @@
+\boolfalse {citerequest}\boolfalse {citetracker}\boolfalse {pagetracker}\boolfalse {backtracker}\relax 
+\changetocdepth {4}
+\babel@toc {brazil}{}
+\babel@toc {brazil}{}
+\babel@toc {brazil}{}
+\defcounter {refsection}{0}\relax 
+\thispagestyle {empty}
+\babel@toc {brazil}{}
+\babel@toc {brazil}{}
+\babel@toc {brazil}{}
+\babel@toc {brazil}{}
+\babel@toc {brazil}{}
+\babel@toc {brazil}{}
+\babel@toc {brazil}{}
+\defcounter {refsection}{0}\relax 
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\babel@toc {brazil}{}
+\babel@toc {brazil}{}
+\defcounter {refsection}{0}\relax 
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\babel@toc {english}{}
+\babel@toc {brazil}{}
+\defcounter {refsection}{0}\relax 
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\defcounter {refsection}{0}\relax 
+\setlength {\cftchapterindent }{\cftlastnumwidth } \setlength {\cftchapternumwidth }{2em}
+\babel@toc {brazil}{}
+\defcounter {refsection}{0}\relax 
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\chapternumberline {1}\MakeTextUppercase {Introdução}}{13}{chapter.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1.1}Motivação}{13}{section.1.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1.2}Objetivos}{14}{section.1.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {1.2.1}Objetivos gerais }{14}{subsection.1.2.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {1.2.2}Objetivos específicos}{14}{subsection.1.2.2}%
+\defcounter {refsection}{0}\relax 
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\chapternumberline {2}\MakeTextUppercase {Ambientes de Testes}}{15}{chapter.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2.1}Introdução}{15}{section.2.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2.2}OWASP Broken Web Applications}{15}{section.2.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {2.3}Mutillidae II}{16}{section.2.3}%
+\defcounter {refsection}{0}\relax 
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\chapternumberline {3}\MakeTextUppercase {Vulnerabilidades}}{17}{chapter.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3.1}Introdução}{17}{section.3.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3.2}Broken Access Control}{17}{section.3.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3.3}Cryptographic Failures}{18}{section.3.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3.4}Injection}{18}{section.3.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3.5}Insecure Design}{18}{section.3.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3.6}Security Misconfiguration}{18}{section.3.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3.7}Vulnerable and Outdated Components}{19}{section.3.7}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3.8}Identification and Authentication Failures}{19}{section.3.8}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3.9}Software and Data Integrity Failures}{19}{section.3.9}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3.10}Security Logging and Monitoring Failures}{19}{section.3.10}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {3.11}Server-Side Request Forgery}{20}{section.3.11}%
+\defcounter {refsection}{0}\relax 
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\chapternumberline {4}\MakeTextUppercase {Tecnologias de Desenvolvimento}}{21}{chapter.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.1}Docker}{21}{section.4.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.2}Tecnologias de aplicação}{21}{section.4.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.2.1}NodeJS}{21}{subsection.4.2.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.2.2}React}{22}{subsection.4.2.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.2.3}SQLite}{22}{subsection.4.2.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {4.3}Ambiente local}{22}{section.4.3}%
+\defcounter {refsection}{0}\relax 
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\chapternumberline {5}\MakeTextUppercase {Proposta de Desenvolvimento}}{23}{chapter.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5.1}Ambiente para Aprendizado e Prática de Técnicas de Segurança Ofensiva em Aplicações Web Vulneráveis}{23}{section.5.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {5.2}Vulnerabilidades selecionadas}{24}{section.5.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.2.1}CWE-23: Relative Path Traversal}{24}{subsection.5.2.1}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.2.2}CWE-319: Cleartext Transmission of Sensitive Information}{24}{subsection.5.2.2}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.2.3}CWE-328: Use of Weak Hash}{24}{subsection.5.2.3}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.2.4}CWE-74: Improper Neutralization of Special Elements in Output Used by a Downstream Component}{24}{subsection.5.2.4}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.2.5}CWE-209: Generation of Error Message Containing Sensitive Information}{24}{subsection.5.2.5}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.2.6}CWE-613: Insufficient Session Expiration}{24}{subsection.5.2.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {5.2.7}CWE-565: Reliance on Cookies without Validation and Integrity Checking}{24}{subsection.5.2.7}%
+\defcounter {refsection}{0}\relax 
+\setlength {\cftchapterindent }{0em} \setlength {\cftchapternumwidth }{\cftlastnumwidth }
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\chapternumberline {6}\MakeTextUppercase {Considerações Finais}}{25}{chapter.6}%
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {6.1}Cronograma}{25}{section.6.1}%
+\defcounter {refsection}{0}\relax 
+\vspace {\cftbeforechapterskip }
+\babel@toc {brazil}{}
+\defcounter {refsection}{0}\relax 
+\thispagestyle {empty}
