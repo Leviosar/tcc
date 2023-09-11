@@ -10,10 +10,10 @@ import shutil
 
 import pdb
 
-outfile = './hello'
-filename = './output'
-# filename = './hello'
-# outfile = './output'
+# outfile = './hello'
+# filename = './output'
+filename = './hello'
+outfile = './output'
 # filename = './philosophers_dinner_(2)'
 # filename = './riscv32-unknown-elf-gcc' 
 
@@ -98,23 +98,29 @@ with open(filename, 'rb+') as fp:
                 
                 try:
                     decoded_instruction = RiscVDecoder().decode(b_instruction)
+                    print(f"{j:08x}: {decoded_instruction}")
                     # if (decoded_instruction.get('funct3') == '000' and decoded_instruction.opcodes[0] == '0010011'):
-                    if (str(decoded_instruction) == "ADDI x0, x0, 0"):
-                        decoded_instruction.set('imm', '1')
-                        modified = RiscVEncoder().encode(decoded_instruction)
+                    # if (str(decoded_instruction) == "ADDI x0, x0, 0"):
+                    #     decoded_instruction.set('imm', '1')
+                    #     modified = RiscVEncoder().encode(decoded_instruction)
                         
-                        position = fp.tell() - 4
+                    #     position = fp.tell() - 4
                         
-                        with open(outfile, 'rb+') as out:
-                            # shit not right
-                            out.seek(position)
-                            out.write(modified)
+                    #     with open(outfile, 'rb+') as out:
+                    #         # shit not right
+                    #         out.seek(position)
+                    #         out.write(modified)
                         
                         
                     total_decoded_instructions += 1
                 except ValueError:
                     # print(f"Unsupported {bin(int.from_bytes(b_instruction, 'little'))}")
                     pass
+                # except StopIteration:
+                #     # print(f"Unsupported {bin(int.from_bytes(b_instruction, 'little'))}")
+                #     print("DEU MERDA")
+                #     print(f"{j:08x}: {instruction:08x}")
+                #     exit()
                 
                 # if (instruction == 65537):
                     # print(Instruction(b_instruction).decode())

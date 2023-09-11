@@ -20,15 +20,21 @@ class Instruction:
     
     
     def get(self, needle):
-        return next(filter(lambda field: field.name == needle, self.fields)).value
+        try: 
+            return next(filter(lambda field: field.name == needle, self.fields)).value
+        except StopIteration:
+            raise KeyError(needle, self.fields)
     
     
     def set(self, needle: str, value: str):
         if (value == ''):
             value = '0'
                 
-        field = next(filter(lambda field: field.name == needle, self.fields)) 
-        
+        try: 
+            field = next(filter(lambda field: field.name == needle, self.fields)) 
+        except StopIteration:
+            raise KeyError(needle, self.fields)
+            
         if field.value is None:
             field.value = '0'
             

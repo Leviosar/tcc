@@ -76,7 +76,7 @@ class IType(Instruction):
 
     def bin(self, endianess: Literal["little", "big"] = "little") -> bytes:
         rep = f"{self.get('imm')}{self.get('rs1')}{self.get('funct3')}{self.get('rd')}{self.get('opcode')}"
-        value = int(rep[::-1], 2)
+        value = int(rep, 2)
         return value.to_bytes(4, endianess)
         
     def __repr__(self):
