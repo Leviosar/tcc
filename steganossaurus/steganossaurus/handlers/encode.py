@@ -1,0 +1,65 @@
+import click
+import shutil
+
+from steganossaurus.elf.parser import parse
+from steganossaurus.arch.riscv.isa.encoder import RiscVEncoder
+
+@click.command()
+@click.argument("file", type=click.Path(exists=True))
+@click.argument("message")
+@click.option("-o", '--output', type=click.Path())
+def encode(file, message, output):
+    if output is not None:
+        shutil.copy(file, output)   
+    
+    message = list(message.encode('ascii'))
+    message = [ bin(char).replace('0b', '').rjust(8, '0') for char in message ]
+    # Adding a nul ascii char at message end
+    message = "".join(message) + "00000000"
+    message_index = 0
+    
+    instruction_generator = parse(file, ["ADD", "AND", "OR", "BEQ", "BNE"])
+    
+    for (decoded_instruction, address, pointer) in instruction_generator:
+        print(f"{address:08x}: {decoded_instruction}")
+        print(f"Trying to encode a {message[message_index]} bit")
+        rs1 = decoded_instruction.get('rs1')
+        rs2 = decoded_instruction.get('rs2')
+        
+        # Can't encode if the registers are the same
+        if rs1 == rs2:
+            print(f"{address:08x}: {decoded_instruction}")
+            continue
+        
+        # We encode 1 as rs1 > rs2
+        if (message[message_index] == '1'):
+            if not (rs1 > rs2):
+                aux = rs1
+                decoded_instruction.set('rs1', rs2)
+                decoded_instruction.set('rs2', aux)
+        # And bit 0 as rs1 < rs2
+        else:
+            if not (rs1 < rs2):
+                aux = rs1
+                decoded_instruction.set('rs1', rs2)
+                decoded_instruction.set('rs2', aux)
+            
+        print(f"{address:08x}: {decoded_instruction}")
+        
+        if output is not None:
+            modified = RiscVEncoder().encode(decoded_instruction)
+            # print(modified)
+            # print(pointer)
+            # exit()
+            with open(output, 'rb+') as fp:
+                fp.seek(pointer)
+                fp.write(modified)
+        
+        message_index += 1
+        
+        if message_index >= len(message):
+            break
+        
+    print("Message was encoded")
+    return
+        
