@@ -5,7 +5,8 @@ from steganossaurus.elf.parser import parse
 
 @click.command()
 @click.argument("file", type=click.Path(exists=True))
-def profile(file):
+@click.option("-o", '--output', type=click.Path())
+def profile(file, output):
     capacity = 0    
     instruction_generator = parse(file, ["ADD", "AND", "OR", "BEQ", "BNE"])
     
@@ -17,6 +18,10 @@ def profile(file):
         if rs1 == rs2:
             continue
         
+        if output is not None:
+            with open(output, 'a') as fp:
+                fp.write(f"Candidate Instruction: {str(decoded_instruction)}\n")
+                
         capacity += 1
         
     print(f"File size (Bytes): {os.path.getsize(file)}")
