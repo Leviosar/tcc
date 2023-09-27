@@ -21,14 +21,11 @@ def encode(file, message, output):
     instruction_generator = parse(file, ["ADD", "AND", "OR", "BEQ", "BNE"])
     
     for (decoded_instruction, address, pointer) in instruction_generator:
-        print(f"{address:08x}: {decoded_instruction}")
-        print(f"Trying to encode a {message[message_index]} bit")
         rs1 = decoded_instruction.get('rs1')
         rs2 = decoded_instruction.get('rs2')
         
         # Can't encode if the registers are the same
         if rs1 == rs2:
-            print(f"{address:08x}: {decoded_instruction}")
             continue
         
         # We encode 1 as rs1 > rs2
@@ -44,13 +41,8 @@ def encode(file, message, output):
                 decoded_instruction.set('rs1', rs2)
                 decoded_instruction.set('rs2', aux)
             
-        print(f"{address:08x}: {decoded_instruction}")
-        
         if output is not None:
             modified = RiscVEncoder().encode(decoded_instruction)
-            # print(modified)
-            # print(pointer)
-            # exit()
             with open(output, 'rb+') as fp:
                 fp.seek(pointer)
                 fp.write(modified)
@@ -59,7 +51,10 @@ def encode(file, message, output):
         
         if message_index >= len(message):
             break
-        
-    print("Message was encoded")
+    
+    if message_index >= len(message):
+        print("Message was encoded")
+    else:
+        print("File doesn't have enough encoding capacity")
     return
         

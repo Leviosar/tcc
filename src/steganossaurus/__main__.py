@@ -6,6 +6,7 @@ import steganossaurus.handlers as handlers
     commands = {
         "encode": handlers.encode,
         "decode": handlers.decode,
+        "profile": handlers.profile,
     }
 )
 def main():

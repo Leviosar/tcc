@@ -9,8 +9,6 @@ def decode(file):
     char = ""
     
     for (decoded_instruction, address, pointer) in instruction_generator:
-        print(f"{address:08x}: {decoded_instruction}")
-        
         rs1 = decoded_instruction.get('rs1')
         rs2 = decoded_instruction.get('rs2')
         

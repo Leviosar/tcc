@@ -50,10 +50,7 @@ class BType(Instruction):
 
     def bin(self, endianess: Literal["little", "big"] = "little") -> bytes:
         rep = f"{self.get('imm[12]')}{self.get('imm[10:5]')}{self.get('rs2')}{self.get('rs1')}{self.get('funct3')}{self.get('imm[4:1]')}{self.get('imm[11]')}{self.get('opcode')}"
-        print(rep)
         value = int(rep, 2)
-        print(value)
-        print(len(value.to_bytes(4, endianess)))
         return value.to_bytes(4, endianess)
     
     def mne(self):
