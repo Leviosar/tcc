@@ -32,7 +32,7 @@ class RiscVDecoder(Decoder):
             # Return 2 bytes to look for a 4-byte normal instruction
             pointer.seek(pointer.tell() - 2)
             
-            source = pointer.read(2)
+            source = pointer.read(4)
             binary = bin(int.from_bytes(source, 'little'))
             
             types = [
