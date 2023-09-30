@@ -1,6 +1,6 @@
 from steganossaurus.arch.common.isa.decoder import Decoder
-from steganossaurus.enums.riscv.isa import OpCode
 from .instructions import Instruction, BType, IType, JType, RType, SType, UType, CType
+from .instructions.extensions.compact import CRType, CAType, CIType
 from typing import Optional, Tuple
 from io import BufferedRandom
 
@@ -13,7 +13,21 @@ class RiscVDecoder(Decoder):
         opcode_hint = binary[-2:]
         
         if opcode_hint != "11":
-            return (None, 2)
+            types = [
+                CRType, CAType, CIType
+            ]
+
+            opcode = binary[-2:]
+            opcode = opcode.replace("0b", "")
+            opcode = opcode.rjust(2, "0")
+            
+            for type in types:
+                if opcode in type.opcodes:
+                    instruction = type(binary)
+
+                    return (instruction, 2)
+            else:
+                raise ValueError(f"Unsupported instruction type: {binary} with opcde {opcode}")
         else:
             # Return 2 bytes to look for a 4-byte normal instruction
             pointer.seek(pointer.tell() - 2)
