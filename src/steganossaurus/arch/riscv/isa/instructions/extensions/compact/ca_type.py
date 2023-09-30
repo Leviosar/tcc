@@ -41,7 +41,7 @@ class CAType(Instruction):
         try:
             instruction = self.functs[self.get('funct6')][self.get('funct2')]
         except KeyError:
-            raise ValueError("Unsupported instruction")
+            raise ValueError(f"Unsupported CA-Type instruction: {self.source}")
 
         return f"{instruction} x{target_register}, x{source_register_2}"
     
@@ -54,7 +54,7 @@ class CAType(Instruction):
         try:
             return self.functs[self.get('opcode')]
         except KeyError:
-            raise ValueError("Unsupported instruction")
+            raise ValueError(f"Unsupported CA-Type instruction: {self.source}")
     
     def __repr__(self):
         return self.asm()

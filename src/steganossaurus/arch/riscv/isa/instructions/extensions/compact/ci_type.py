@@ -44,7 +44,7 @@ class CIType(Instruction):
         try:
             instruction = self.functs[self.get("funct3")]["mne"]
         except KeyError:
-            raise ValueError("Unsupported instruction")
+            raise ValueError(f"Unsupported CI-Type instruction: {self.source}")
         
         imm_fields = self.functs[self.get("funct3")]["imm"]
         
@@ -76,7 +76,7 @@ class CIType(Instruction):
         try:
             return self.functs[self.get("opcode")]
         except KeyError:
-            raise ValueError("Unsupported instruction")
+            raise ValueError(f"Unsupported CI-Type instruction: {self.source}")
     
     def __repr__(self):
         return self.asm()

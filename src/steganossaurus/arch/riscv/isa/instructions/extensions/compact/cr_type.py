@@ -3,7 +3,7 @@ from typing import Literal
 
 class CRType(Instruction):
 
-    opcodes = ['00']
+    opcodes = ['10']
 
     fields = [
         Field('opcode', 0, 2),
@@ -13,12 +13,33 @@ class CRType(Instruction):
     ]
     
     functs = {
-        # RV32
-        "1001": "C.ADD",
-        "1000": "C.MV",
+        "10": {
+            "1000": [
+                # The difference between C.JR and C.MV is the rs2 value
+                {
+                    "mne": "C.JR",
+                    "condition": lambda rs2: rs2 == "00000",
+                },
+                {
+                    "mne": "C.MV",
+                    "condition": lambda rs2: rs2 != "00000",
+                },
+            ],
+            "1001": [
+                # The difference between C.JALR and C.ADD is the rs2 value
+                {
+                    "mne": "C.JALR",
+                    "condition": lambda rs2: rs2 == "00000",
+                },
+                {
+                    "mne": "C.ADD",
+                    "condition": lambda rs2: rs2 != "00000",
+                },
+            ],
+        }
     }
     """
-        Table of instructions indexed by [funct4] fields.
+        Table of instructions indexed by [opcode][funct4] fields.
     """
 
     def __init__(self, source: str):
@@ -30,9 +51,10 @@ class CRType(Instruction):
         source_register_2 = int(self.get('rs2'), 2)
         
         try:
-            instruction = self.functs[self.get('funct4')]
+            candidates = self.functs[self.get('opcode')][self.get('funct4')]
+            instruction = next(filter(lambda i: i["condition"](self.get('rs2')), candidates))['mne']
         except KeyError:
-            raise ValueError("Unsupported instruction")
+            raise ValueError(f"Unsupported CR-Type instruction: {self.source}")
 
         return f"{instruction} x{target_register}, x{source_register_2}"
     
@@ -43,9 +65,10 @@ class CRType(Instruction):
     
     def mne(self):
         try:
-            return self.functs[self.get('opcode')]
+            candidates = self.functs[self.get('opcode')][self.get('funct4')]
+            return next(filter(lambda i: i["condition"](self.get('rs2')), candidates))['mne']
         except KeyError:
-            raise ValueError("Unsupported instruction")
+            raise ValueError(f"Unsupported CR-Type instruction: {self.source}")
     
     def __repr__(self):
         return self.asm()

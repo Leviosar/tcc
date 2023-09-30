@@ -32,7 +32,7 @@ class CSType(Instruction):
         try:
             instruction = self.functs[self.get('funct4')]
         except KeyError:
-            raise ValueError("Unsupported instruction")
+            raise ValueError(f"Unsupported CS-Type instruction: {self.source}")
 
         return f"{instruction} x{target_register}, x{source_register_2}"
     
@@ -45,7 +45,7 @@ class CSType(Instruction):
         try:
             return self.functs[self.get('opcode')]
         except KeyError:
-            raise ValueError("Unsupported instruction")
+            raise ValueError(f"Unsupported CS-Type instruction: {self.source}")
     
     def __repr__(self):
         return self.asm()

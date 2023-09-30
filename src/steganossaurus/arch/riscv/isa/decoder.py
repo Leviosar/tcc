@@ -1,6 +1,6 @@
 from steganossaurus.arch.common.isa.decoder import Decoder
 from .instructions import Instruction, BType, IType, JType, RType, SType, UType, CType
-from .instructions.extensions.compact import CRType, CAType, CIType
+from .instructions.extensions.compact import CRType, CAType, CIType, CJType, CBType
 from typing import Optional, Tuple
 from io import BufferedRandom
 
@@ -14,7 +14,7 @@ class RiscVDecoder(Decoder):
         
         if opcode_hint != "11":
             types = [
-                CRType, CAType, CIType
+                CRType, CAType, CIType, CJType, CBType
             ]
 
             opcode = binary[-2:]
@@ -23,11 +23,14 @@ class RiscVDecoder(Decoder):
             
             for type in types:
                 if opcode in type.opcodes:
-                    instruction = type(binary)
-
-                    return (instruction, 2)
+                    try:
+                        instruction = type(binary)
+                        instruction.asm()
+                        return (instruction, 2)
+                    except ValueError as e:
+                        pass
             else:
-                raise ValueError(f"Unsupported instruction type: {binary} with opcde {opcode}")
+                raise ValueError(f"Unsupported compact instruction type: {binary} with opcde {opcode}")
         else:
             # Return 2 bytes to look for a 4-byte normal instruction
             pointer.seek(pointer.tell() - 2)
@@ -45,8 +48,10 @@ class RiscVDecoder(Decoder):
             
             for type in types:
                 if opcode in type.opcodes:
-                    instruction = type(binary)
-
-                    return (instruction, 4)
+                    try:
+                        instruction = type(binary)
+                        return (instruction, 4)
+                    except ValueError as e:
+                        print(f"Unsupported instruction type: {binary} with opcde {opcode}")    
             else:
                 raise ValueError(f"Unsupported instruction type: {binary} with opcde {opcode}")
