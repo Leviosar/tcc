@@ -35,7 +35,7 @@ class UType(Instruction):
         try:
             instruction = self.instructions[self.get('opcode')]
         except KeyError:
-            raise ValueError("Unsupported instruction")
+            raise ValueError(f"Unsupported U-Type instruction: {self.source}")
 
         return f"{instruction} x{target_register}, x{immediate}"
 
@@ -48,7 +48,7 @@ class UType(Instruction):
         try:
             return self.instructions[self.get('opcode')]
         except KeyError:
-            raise ValueError("Unsupported instruction")
+            raise ValueError(f"Unsupported U-Type instruction: {self.source}")
     
     def __repr__(self):
         return self.asm()

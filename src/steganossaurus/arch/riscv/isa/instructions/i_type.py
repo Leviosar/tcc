@@ -70,7 +70,7 @@ class IType(Instruction):
         try:
             instruction = self.funcs[self.get('opcode')][self.get('funct3')]
         except KeyError:
-            raise ValueError("Unsupported instruction")
+            raise ValueError(f"Unsupported I-Type instruction: {self.source}")
 
         return f"{instruction} x{target_register}, x{source_register}, {immediate}"
 
@@ -83,7 +83,7 @@ class IType(Instruction):
         try:
             return self.funcs[self.get('opcode')][self.get('funct3')]
         except KeyError:
-            raise ValueError("Unsupported instruction")
+            raise ValueError(f"Unsupported I-Type instruction: {self.source}")
     
     def __repr__(self):
         return self.asm()

@@ -44,7 +44,7 @@ class BType(Instruction):
         try:
             instruction = self.funcs[self.get('opcode')][self.get('funct3')]
         except KeyError:
-            raise ValueError("Unsupported instruction")
+            raise ValueError(f"Unsupported B-Type instruction: {self.source}")
 
         return f"{instruction} x{source_register_1}, x{source_register_2}, {immediate}"
 
@@ -57,7 +57,7 @@ class BType(Instruction):
         try:
             return self.funcs[self.get('opcode')][self.get('funct3')]
         except KeyError:
-            raise ValueError("Unsupported instruction")
+            raise ValueError(f"Unsupported B-Type instruction: {self.source}")
         
     def __repr__(self):
         return self.asm()

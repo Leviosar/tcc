@@ -79,7 +79,7 @@ class RType(Instruction):
         try:
             instruction = self.funcs[self.get('opcode')][self.get('funct7')][self.get('funct3')]
         except KeyError:
-            raise ValueError("Unsupported instruction")
+            raise ValueError(f"Unsupported R-Type instruction: {self.source}")
 
         return f"{instruction} x{target_register}, x{source_register_1}, x{source_register_2}"
     
@@ -92,7 +92,7 @@ class RType(Instruction):
         try:
             return self.funcs[self.get('opcode')][self.get('funct7')][self.get('funct3')]
         except KeyError:
-            raise ValueError("Unsupported instruction")
+            raise ValueError(f"Unsupported R-Type instruction: {self.source}")
     
     def __repr__(self):
         return self.asm()

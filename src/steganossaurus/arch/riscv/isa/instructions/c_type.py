@@ -217,7 +217,7 @@ class CType(Instruction):
         try:
             instruction = self.funcs[self.get('opcode')][self.get('funct3')]
         except KeyError:
-            raise ValueError("Unsupported instruction")
+            raise ValueError(f"Unsupported C-Type instruction: {self.source}")
 
         return f"{instruction} x{target_register}, x{source_register} {immediate}"
 
