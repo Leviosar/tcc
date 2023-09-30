@@ -59,7 +59,7 @@ class CBType(Instruction):
     
     def mne(self):
         try:
-            return self.functs[self.get("opcode")]
+            return self.functs[self.get("funct3")]
         except KeyError:
             raise ValueError(f"Unsupported CB-Type instruction: {self.source}")
     
