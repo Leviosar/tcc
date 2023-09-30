@@ -86,16 +86,25 @@ def parse(filename, supported = ["*"], debug = False) -> Generator[Tuple[Instruc
                 
                 while j < section_header['sh_size']:
                     total_instructions += 1
-                    b_instruction = fp.read(4)
                     
                     try:
-                        decoded_instruction = RiscVDecoder().decode(b_instruction)
+                        decoded_instruction, size = RiscVDecoder().decode(fp)
+                        
+                        if debug:
+                            print(f"{j:08x} : {decoded_instruction}")
+                            
+                        j += size
+                        
+                        if decoded_instruction is None:
+                            continue
                         
                         if decoded_instruction.mne() in supported or "*" in supported:
                             yield (decoded_instruction, j, fp.tell() - 4)
                             
                         total_decoded_instructions += 1
-                    except ValueError:
+                    except ValueError as e:
+                        if (debug):
+                            print(f"{j:08x}: {e}")
                         pass
                     
                     j += 4

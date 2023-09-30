@@ -1,80 +1,38 @@
 from steganossaurus.arch.common.isa.decoder import Decoder
 from steganossaurus.enums.riscv.isa import OpCode
 from .instructions import Instruction, BType, IType, JType, RType, SType, UType, CType
-from typing import List
+from typing import Optional, Tuple
+from io import BufferedRandom
 
 class RiscVDecoder(Decoder):
-    def decode(self, source: bytes) -> Instruction:
+    def decode(self, pointer: BufferedRandom) -> Tuple[Optional[Instruction], int]:
+        # Checking for 2-byte compact instruction
+        source = pointer.read(2)
         binary = bin(int.from_bytes(source, 'little'))
-
-        types = [
-            BType, IType, JType, RType, SType, UType, CType
-        ]
-
-        opcode = binary[-7:]
-        opcode = opcode.replace("0b", "")
-        opcode = opcode.rjust(7, "0")
         
-        for type in types:
-            if opcode in type.opcodes:
-                instruction = type(binary)
-
-                return instruction
+        opcode_hint = binary[-2:]
+        
+        if opcode_hint != "11":
+            return (None, 2)
         else:
-            raise ValueError("Unsupported instruction type")
+            # Return 2 bytes to look for a 4-byte normal instruction
+            pointer.seek(pointer.tell() - 2)
+            
+            source = pointer.read(2)
+            binary = bin(int.from_bytes(source, 'little'))
+            
+            types = [
+                BType, IType, JType, RType, SType, UType, CType
+            ]
 
+            opcode = binary[-7:]
+            opcode = opcode.replace("0b", "")
+            opcode = opcode.rjust(7, "0")
+            
+            for type in types:
+                if opcode in type.opcodes:
+                    instruction = type(binary)
 
-        match opcode:
-            case OpCode.AUIPC:
-                pass
-            case OpCode.LUI:
-                pass
-            case OpCode.JALR:
-                pass
-            case OpCode.JAL:
-                pass
-            case OpCode.B_TYPE:
-                pass
-            case OpCode.I_TYPE:
-                rd = binary[20:25]
-                funct3 = binary[17:20]
-                rs1 = binary[12:17]
-                imm = binary[0:12]
-                pass
-            case OpCode.S_TYPE:
-                pass
-            case OpCode.S_TYPE_F:
-                pass
-            case OpCode.U_TYPE:
-                pass
-            case OpCode.I_TYPE_A:
-                pass
-            case OpCode.I_TYPE_B:
-                pass
-            case OpCode.I_TYPE_F:
-                pass
-            case OpCode.I_TYPE_FEN:
-                pass
-            case OpCode.R4_TYPE_FMADD:
-                pass
-            case OpCode.R4_TYPE_FNMADD:
-                pass
-            case OpCode.R4_TYPE_FMSUB:
-                pass
-            case OpCode.R4_TYPE_FNMSUB:
-                pass
-            case OpCode.R_TYPE:
-                rd = binary[20:25]
-                funct3 = binary[17:20]
-                rs1 = binary[12:17]
-                rs2 = binary[7:12]
-                funct7 = binary[0:7]
-                pass
-            case OpCode.R_TYPE_F:
-                pass
-            case OpCode.R_TYPE_W:
-                pass
-            case OpCode.R_TYPE_AMO:
-                pass
-        print(binary[2:].zfill(32))
-        return super().decode(source)
+                    return (instruction, 4)
+            else:
+                raise ValueError(f"Unsupported instruction type: {binary} with opcde {opcode}")
