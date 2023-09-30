@@ -8,7 +8,8 @@ from steganossaurus.arch.riscv.isa.encoder import RiscVEncoder
 @click.argument("file", type=click.Path(exists=True))
 @click.argument("message")
 @click.option("-o", '--output', type=click.Path())
-def encode(file, message, output):
+@click.option('--debug/--no-debug', default=False)
+def encode(file, message, output, debug):
     if output is not None:
         shutil.copy(file, output)   
     
@@ -18,7 +19,7 @@ def encode(file, message, output):
     message = "".join(message) + "00000000"
     message_index = 0
     
-    instruction_generator = parse(file, ["ADD", "AND", "OR", "BEQ", "BNE"])
+    instruction_generator = parse(file, ["ADD", "AND", "OR", "BEQ", "BNE"], debug)
     
     for (decoded_instruction, address, pointer) in instruction_generator:
         rs1 = decoded_instruction.get('rs1')

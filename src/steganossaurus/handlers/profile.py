@@ -6,9 +6,10 @@ from steganossaurus.elf.parser import parse
 @click.command()
 @click.argument("file", type=click.Path(exists=True))
 @click.option("-o", '--output', type=click.Path())
-def profile(file, output):
+@click.option('--debug/--no-debug', default=False)
+def profile(file, output, debug):
     capacity = 0    
-    instruction_generator = parse(file, ["ADD", "AND", "OR", "BEQ", "BNE"])
+    instruction_generator = parse(file, ["ADD", "AND", "OR", "BEQ", "BNE"], debug)
     
     for (decoded_instruction, address, pointer) in instruction_generator:
         rs1 = decoded_instruction.get('rs1')
