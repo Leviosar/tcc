@@ -59,6 +59,53 @@ class ProgramType(Enum):
     PHDR = 6	# Segment containing program header table itself.
     TLS = 7     # Thread-Local Storage template.
     
+class SectionType(Enum):
+    NULL = 0	        # Program header table entry unused.
+    PROGBITS = 1	    # Program data.
+    SYMTAB = 2          # Symbol table.
+    STRTAB = 3          # String table
+    RELA = 4	        # Relocation entries with addends
+    HASH = 5            # Symbol hash table.
+    DYNAMIC = 6	        # Dynamic linking information
+    NOTE = 7            # Notes.
+    NOBITS = 8          # Program space with no data (bss)
+    REL = 9             # Relocation entries, no addends
+    SHLIB = 10          # Reserved
+    DYNSYM = 11         # Dynamic linker symbol table
+    INIT_ARRAY = 12     # Array of constructors
+    FINI_ARRAY = 13     # Array of destructors
+    PREINIT_ARRAY = 14  # Array of pre-constructors
+    GROUP = 15          # Section group
+    SYMTAB_SHNDX = 16   # Extended section indices
+    NUM = 17            # Number of defined types.
+
+    @classmethod
+    def _list(cls):
+        return [
+            cls.NULL,
+            cls.PROGBITS,
+            cls.SYMTAB,
+            cls.STRTAB,
+            cls.RELA,
+            cls.HASH,
+            cls.DYNAMIC,
+            cls.NOTE,
+            cls.NOBITS,
+            cls.REL,
+            cls.SHLIB,
+            cls.DYNSYM,
+            cls.INIT_ARRAY,
+            cls.FINI_ARRAY,
+            cls.PREINIT_ARRAY,
+            cls.GROUP,
+            cls.SYMTAB_SHNDX,
+            cls.NUM,
+        ]
+
+    @classmethod
+    def from_int(cls, n: int):
+        return cls._list()[n]
+    
 # Source: https://refspecs.linuxbase.org/elf/gabi4+/ch5.pheader.html#p_flags
 class ProgramFlags(Enum):
     X   = 1

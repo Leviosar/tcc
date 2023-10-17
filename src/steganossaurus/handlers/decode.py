@@ -1,9 +1,15 @@
 import click
+
 from steganossaurus.elf.parser import parse
+from steganossaurus.utils.logger import setup_logger
+from typing import Literal
 
 @click.command()
 @click.argument("file", type=click.Path(exists=True))
-def decode(file):
+@click.option('--log-level', type=click.Choice(["debug", "info", "warning", "error", "critical"]))
+def decode(file, log_level):
+    setup_logger(log_level)
+    
     instruction_generator = parse(file, ["ADD", "AND", "OR", "BEQ", "BNE"])
     message = ""
     char = ""
