@@ -24,6 +24,7 @@ class OpCode(Enum):
     R_TYPE_W = "0111011"
     R_TYPE_AMO = "0101111"
 
+
 class BTypeFunction(Enum):
     BEQ = "000"
     BNE = "001"
@@ -31,6 +32,7 @@ class BTypeFunction(Enum):
     BGE = "101"
     BLTU = "110"
     BGEU = "111"
+
 
 class ITypeFunction(Enum):
     LB = "000"
@@ -40,6 +42,7 @@ class ITypeFunction(Enum):
     LHU = "101"
     LWU = "110"
     LD = "011"
+
 
 class ITypeAFunction(Enum):
     ADDI = "000"

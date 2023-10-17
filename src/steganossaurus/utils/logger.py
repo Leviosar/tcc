@@ -10,7 +10,10 @@ try:
 except:
     pass
 
-def setup_logger(level: Literal["debug", "info", "warning", "error", "critical"] = "warning"):
+
+def setup_logger(
+    level: Literal["debug", "info", "warning", "error", "critical"] = "warning"
+):
     levels = {
         "debug": logging.DEBUG,
         "info": logging.INFO,
@@ -18,10 +21,10 @@ def setup_logger(level: Literal["debug", "info", "warning", "error", "critical"]
         "error": logging.ERROR,
         "critical": logging.CRITICAL,
     }
-    
+
     logging.basicConfig(
         filename=f"{ROOT_DIR}/logs/{datetime.today().strftime('%Y-%m-%d')}.log",
         level=levels.get(level),
-        format='[%(asctime)s] - [%(levelname)s]: %(message)s',
-        datefmt='%H:%M:%S'
+        format="[%(asctime)s] - [%(levelname)s]: %(message)s",
+        datefmt="%H:%M:%S",
     )

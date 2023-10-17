@@ -2,8 +2,9 @@ import click
 
 import steganossaurus.handlers as handlers
 
+
 @click.group(
-    commands = {
+    commands={
         "encode": handlers.encode,
         "decode": handlers.decode,
         "profile": handlers.profile,
@@ -11,6 +12,7 @@ import steganossaurus.handlers as handlers
 )
 def main():
     pass
+
 
 if __name__ == "__main__":
     main()

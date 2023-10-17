@@ -1,19 +1,19 @@
 from .instruction import Instruction, Field
 from typing import Literal
 
-class RType(Instruction):
 
-    opcodes = ['0110011', '0111011']
+class RType(Instruction):
+    opcodes = ["0110011", "0111011"]
 
     fields = [
-        Field('opcode', 0, 7),
-        Field('rd', 7, 5),
-        Field('funct3', 12, 3),
-        Field('rs1', 15, 5),
-        Field('rs2', 20, 5),
-        Field('funct7', 25, 7),
+        Field("opcode", 0, 7),
+        Field("rd", 7, 5),
+        Field("funct3", 12, 3),
+        Field("rs1", 15, 5),
+        Field("rs2", 20, 5),
+        Field("funct7", 25, 7),
     ]
-    
+
     funcs = {
         # RV32
         "0111011": {
@@ -59,7 +59,7 @@ class RType(Instruction):
                 "101": "DIVU",
                 "110": "REM",
                 "111": "REMU",
-            }
+            },
         },
     }
     """
@@ -68,32 +68,36 @@ class RType(Instruction):
 
     def __init__(self, source: str):
         super().__init__(source)
-        
+
     def asm(self) -> str:
-        target_register = int(self.get('rd'), 2)
-        
-        source_register_1 = int(self.get('rs1'), 2)
-        
-        source_register_2 = int(self.get('rs2'), 2)
-        
+        target_register = int(self.get("rd"), 2)
+
+        source_register_1 = int(self.get("rs1"), 2)
+
+        source_register_2 = int(self.get("rs2"), 2)
+
         try:
-            instruction = self.funcs[self.get('opcode')][self.get('funct7')][self.get('funct3')]
+            instruction = self.funcs[self.get("opcode")][self.get("funct7")][
+                self.get("funct3")
+            ]
         except KeyError:
             raise ValueError(f"Unsupported R-Type instruction: {self.source}")
 
         return f"{instruction} x{target_register}, x{source_register_1}, x{source_register_2}"
-    
+
     def bin(self, endianess: Literal["little", "big"] = "little") -> bytes:
         rep = f"{self.get('funct7')}{self.get('rs2')}{self.get('rs1')}{self.get('funct3')}{self.get('rd')}{self.get('opcode')}"
         value = int(rep, 2)
         return value.to_bytes(4, endianess)
-    
+
     def mne(self):
         try:
-            return self.funcs[self.get('opcode')][self.get('funct7')][self.get('funct3')]
+            return self.funcs[self.get("opcode")][self.get("funct7")][
+                self.get("funct3")
+            ]
         except KeyError:
             raise ValueError(f"Unsupported R-Type instruction: {self.source}")
-    
+
     def __repr__(self):
         return self.asm()
 

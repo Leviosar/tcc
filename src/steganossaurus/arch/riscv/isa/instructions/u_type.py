@@ -1,39 +1,39 @@
 from .instruction import Instruction, Field
 from typing import Literal
 
-class UType(Instruction):
 
+class UType(Instruction):
     # CHECK
     opcodes = [
-        '1110011',
-        '0010111',
-        '0110111',
+        "1110011",
+        "0010111",
+        "0110111",
     ]
-    
+
     instructions = {
-        '0010111': 'AIUPC',                
-        '0110111': 'LUI',                
+        "0010111": "AIUPC",
+        "0110111": "LUI",
     }
 
     fields = [
-        Field('opcode', 0, 7),
-        Field('rd', 7, 5),
-        Field('imm', 12, 20),
+        Field("opcode", 0, 7),
+        Field("rd", 7, 5),
+        Field("imm", 12, 20),
     ]
 
     def __init__(self, source: str):
         super().__init__(source)
-        
+
     def asm(self) -> str:
-        concat = self.get('imm')
-        
+        concat = self.get("imm")
+
         immediate = int(concat, 2), len(concat)
         immediate = int(concat, 2)
-        
-        target_register = int(self.get('rd'), 2)
-        
+
+        target_register = int(self.get("rd"), 2)
+
         try:
-            instruction = self.instructions[self.get('opcode')]
+            instruction = self.instructions[self.get("opcode")]
         except KeyError:
             raise ValueError(f"Unsupported U-Type instruction: {self.source}")
 
@@ -46,10 +46,10 @@ class UType(Instruction):
 
     def mne(self):
         try:
-            return self.instructions[self.get('opcode')]
+            return self.instructions[self.get("opcode")]
         except KeyError:
             raise ValueError(f"Unsupported U-Type instruction: {self.source}")
-    
+
     def __repr__(self):
         return self.asm()
 

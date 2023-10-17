@@ -2,7 +2,6 @@ from steganossaurus.arch.riscv.isa.decoder import RiscVDecoder
 
 
 class Instruction:
-    
     code: bytes
     _decoder: RiscVDecoder
 
