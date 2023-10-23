@@ -4,6 +4,7 @@ import shutil
 from steganossaurus.elf.parser import parse
 from steganossaurus.arch.riscv.isa.encoder import RiscVEncoder
 from steganossaurus.utils.logger import setup_logger
+from steganossaurus.utils.crypto import encrypt
 from typing import Literal
 
 
@@ -14,16 +15,31 @@ from typing import Literal
 @click.option(
     "--log-level", type=click.Choice(["debug", "info", "warning", "error", "critical"])
 )
-def encode(file, message, output, log_level):
+@click.password_option()
+def encode(
+    file: str,
+    message: str,
+    output: str,
+    log_level: Literal["debug", "info", "warning", "error", "critical"],
+    password: str,
+):
     setup_logger(log_level)
 
     if output is not None:
         shutil.copy(file, output)
 
-    message = list(message.encode("ascii"))
-    message = [bin(char).replace("0b", "").rjust(8, "0") for char in message]
+    # Encrypts the plaintext message using AES with OFB mode to add pseudorandom distribution to each char
+    encrypted_message = encrypt(message.encode("ascii"), password)
+
+    # Splits message into ascii codepoints list
+    encrypted_message = list(encrypted_message)
+    splitted_message = [
+        bin(int(char)).replace("0b", "").rjust(8, "0") for char in encrypted_message
+    ]
+
     # Adding a nul ascii char at message end
-    message = "".join(message) + "00000000"
+    message = "".join(splitted_message) + "00000000"
+
     message_index = 0
 
     instruction_generator = parse(file, ["ADD", "AND", "OR", "BEQ", "BNE"])
@@ -61,7 +77,9 @@ def encode(file, message, output, log_level):
             break
 
     if message_index >= len(message):
-        print("Message was encoded")
+        print(f"Message was encoded at {output}")
     else:
-        print("File doesn't have enough encoding capacity")
+        print(
+            "File doesn't have enough encoding capacity. To check the needed capacity for a given message use the `profile` command."
+        )
     return

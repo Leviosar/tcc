@@ -2,6 +2,7 @@ import click
 
 from steganossaurus.elf.parser import parse
 from steganossaurus.utils.logger import setup_logger
+from steganossaurus.utils.crypto import decrypt
 from typing import Literal
 
 
@@ -10,7 +11,12 @@ from typing import Literal
 @click.option(
     "--log-level", type=click.Choice(["debug", "info", "warning", "error", "critical"])
 )
-def decode(file, log_level):
+@click.password_option()
+def decode(
+    file: str,
+    log_level: Literal["debug", "info", "warning", "error", "critical"],
+    password: str,
+):
     setup_logger(log_level)
 
     instruction_generator = parse(file, ["ADD", "AND", "OR", "BEQ", "BNE"])
@@ -36,6 +42,8 @@ def decode(file, log_level):
                 message += chr(int(char, base=2))
                 char = ""
 
-    print("Message was decoded:")
-    print(message)
-    return
+    try:
+        decrypted_message = decrypt(message.encode("ascii"), password)
+        print(f"Message found: {decrypted_message.decode('ascii')}")
+    except:
+        print("There aren't the droids you're looking for")

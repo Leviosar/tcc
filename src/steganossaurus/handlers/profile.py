@@ -3,7 +3,8 @@ import os
 
 from steganossaurus.elf.parser import parse
 from steganossaurus.utils.logger import setup_logger
-from typing import Literal
+from steganossaurus.utils.crypto import encrypt
+from typing import Literal, Union
 
 import logging
 
@@ -14,7 +15,8 @@ import logging
 @click.option(
     "--log-level", type=click.Choice(["debug", "info", "warning", "error", "critical"])
 )
-def profile(file, output, log_level):
+@click.option("--message")
+def profile(file, output, log_level, message: Union[str, None] = None):
     setup_logger(log_level)
 
     capacity = 0
@@ -39,9 +41,18 @@ def profile(file, output, log_level):
 
         capacity += 1
 
-    print(f"File size (Bytes): {os.path.getsize(file)}")
-    print(f"Encoding capacity (Bytes): {(capacity // 8) - 1}")
-    print(f"Encoding capacity (Characters): {(capacity // 8 - 1)}")
+    print(f"File size (in Bytes): {os.path.getsize(file)}")
+    print(f"Encoding capacity (in Bytes): {(capacity // 8) - 1}")
+
+    if message is not None:
+        # Password here doesn't matter, the message is only used for profiling
+        encrypted_message = encrypt(message.encode("ascii"), "big_bad_wolf")
+
+        # Splits message into ascii codepoints list
+        encrypted_message = list(encrypted_message)
+
+        print(f"Message size (encrypted, in Bytes): {len(encrypted_message) + 1}")
+
     print(f"Natural 0 encoded bits: {natural_bits[0]}")
     print(f"Natural 1 encoded bits: {natural_bits[1]}")
     return
