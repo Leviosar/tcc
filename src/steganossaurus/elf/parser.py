@@ -67,14 +67,16 @@ def parse(
 
         # Parsing section table names
         # section_table_index = header['e_shstrndx']
-
+        
+        total_instructions = 0
+        total_decoded_instructions = 0
+        
         for i in range(header["e_shnum"]):
             fp.seek(header["e_shoff"] + (i * header["e_shentsize"]))
             section_header = SectionHeader(header)
             section_header.parse(fp)
 
             name = string_table.get(section_header["sh_name"])
-
             logging.debug(f"Found Section")
             logging.debug(f"-------------")
             logging.debug(f"Section index: {i}")
@@ -93,8 +95,6 @@ def parse(
                 fp.seek(section_header["sh_offset"])
                 j = 0
 
-                total_instructions = 0
-                total_decoded_instructions = 0
 
                 while j < section_header["sh_size"]:
                     total_instructions += 1
@@ -119,10 +119,11 @@ def parse(
 
                     j += 4
 
-                logging.debug(f"Total instructions: {total_instructions}")
-                logging.debug(
-                    f"Total decoded instructions: {total_decoded_instructions}"
-                )
-                logging.debug(
-                    f"Decoding ratio: {(total_decoded_instructions / total_instructions) * 100}.2f %"
-                )
+        logging.info(f"{filename} & {total_instructions} & {total_decoded_instructions} & {((total_decoded_instructions / total_instructions) * 100):.2f}")
+        logging.info(f"Total instructions: {total_instructions}")
+        logging.info(
+            f"Total decoded instructions: {total_decoded_instructions}"
+        )
+        logging.info(
+            f"Decoding ratio: {(total_decoded_instructions / total_instructions) * 100}.2f %"
+        )

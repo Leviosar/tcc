@@ -15,4 +15,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main(max_content_width=120)

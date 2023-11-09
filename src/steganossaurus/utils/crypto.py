@@ -3,6 +3,7 @@ import base64
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
 from Crypto.Protocol.KDF import PBKDF2
+from Crypto.Hash import SHA512
 
 KEY_SIZE = 16
 SALT_SIZE = 16
@@ -23,7 +24,7 @@ def encrypt(message: bytes, password="big_bad_wolf") -> bytes:
     """
     salt = get_random_bytes(SALT_SIZE)
 
-    key = PBKDF2(password, salt, KEY_SIZE, PBKDF2_ITERATIONS)
+    key = PBKDF2(password, salt, KEY_SIZE, PBKDF2_ITERATIONS, hmac_hash_module=SHA512)
 
     iv = bytearray(16)
 
@@ -53,7 +54,7 @@ def decrypt(ciphertext: bytes, password: str):
 
     ciphertext = ciphertext[SALT_SIZE:]
 
-    key = PBKDF2(password, salt, KEY_SIZE, PBKDF2_ITERATIONS)
+    key = PBKDF2(password, salt, KEY_SIZE, PBKDF2_ITERATIONS, hmac_hash_module=SHA512)
 
     iv = bytearray(16)
 

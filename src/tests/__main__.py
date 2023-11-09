@@ -1,35 +1,17 @@
-import click
 import os
-
+import pathlib
+from tabulate import tabulate
 from steganossaurus.elf.parser import parse
 from steganossaurus.utils.logger import setup_logger
 from steganossaurus.utils.crypto import encrypt
 from typing import Literal, Union
+from fractions import Fraction
 
 import logging
 
-
-@click.command()
-@click.argument("file", type=click.Path(exists=True))
-@click.option("-o", "--output", type=click.Path())
-@click.option(
-    "--log-level", type=click.Choice(["debug", "info", "warning", "error", "critical"])
-)
-@click.option("--message")
-def profile(file: str, output: str, log_level: Literal["debug", "info", "warning", "error", "critical"], message: Union[str, None] = None):
-    """Runs a profile for binary steganography on a given file
-
-    Args:
-        file str: path to the binary file
-        output str: path to output file
-        log_level Literal["debug", "info", "warning", "error", "critical"]: Level for log messages.
-        message (Union[str, None], optional): message to check if fits on file or not. Defaults to None.
-
-    Returns:
-        (int, int, (int, int)): tuple containing (filesize, encoding capacity in bits, (natural encoded 0 bits, natural encoded 1 bits))
-    """
+def profile(file: str, log_level: Literal["debug", "info", "warning", "error", "critical"], message: Union[str, None] = None):
     setup_logger(log_level)
-
+    
     capacity: int = 0
     instruction_generator = parse(file, ["ADD", "AND", "OR", "BEQ", "BNE"])
     natural_bits = [0, 0]
@@ -45,11 +27,7 @@ def profile(file: str, output: str, log_level: Literal["debug", "info", "warning
             natural_bits[1] += 1
         else:
             natural_bits[0] += 1
-
-        if output is not None:
-            with open(output, "a") as fp:
-                fp.write(f"Candidate Instruction: {str(decoded_instruction)}\n")
-
+            
         capacity += 1
 
     logging.info(f"File size (in Bytes): {os.path.getsize(file)}")
@@ -66,7 +44,34 @@ def profile(file: str, output: str, log_level: Literal["debug", "info", "warning
         print(f"Message size (encrypted, in Bytes): {len(encrypted_message) + 1}")
 
     return (
-        os.path.getsize(file),
+        os.path.getsize(file) * 8,
         capacity,
+        Fraction(capacity, os.path.getsize(file) * 8),
         (natural_bits[0], natural_bits[1])
     )
+
+def absoluteFilePaths(directory):
+    files = []
+    for dirpath,_,filenames in os.walk(directory):
+        for f in filenames:
+            # files.append(os.path.abspath(pathlib.Path(os.path.join(dirpath, f))))
+            files.append(f"./steganossaurus/bin/pg/{f}")
+    return files
+            
+filenames = absoluteFilePaths("F:\\Dev\\ufsc\\tcc\\src\\steganossaurus\\bin\\pg")
+filenames.append("./steganossaurus/bin/vmlinux")
+filenames.append("./steganossaurus/bin/hello")
+results = []
+headers = ["name", "filesize", "capacity", "proportion"]
+
+for filename in filenames:
+    data = profile(filename, "info", "FLA")
+    print(f"{filename} & {(data[1]/data[0] * 100):.2f}\\% \\\\")
+    results.append([filename, data[0], data[1], f"{(data[1]/data[0] * 100):.2f} %"])
+
+    
+print(tabulate(results, headers))
+
+avg = sum(map(lambda i: (i[2]/i[1] * 100), results)) / len(results)
+
+print(f"Média de encoding rate: {avg:.2f}%")

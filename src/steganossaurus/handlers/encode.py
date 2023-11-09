@@ -11,11 +11,12 @@ from typing import Literal
 @click.command()
 @click.argument("file", type=click.Path(exists=True))
 @click.argument("message")
-@click.option("-o", "--output", type=click.Path())
+@click.option("-o", "--output", type=click.Path(), help="Path to output file, created if not exists.")
 @click.option(
-    "--log-level", type=click.Choice(["debug", "info", "warning", "error", "critical"])
+    "--log-level", type=click.Choice(["debug", "info", "warning", "error", "critical"]),
+    help="Level of data to de logged."
 )
-@click.password_option()
+@click.password_option(help="Password used to encrypt the message.")
 def encode(
     file: str,
     message: str,
@@ -23,6 +24,7 @@ def encode(
     log_level: Literal["debug", "info", "warning", "error", "critical"],
     password: str,
 ):
+    """Embeds a message into the given FILE, encrypting it with a required password."""
     setup_logger(log_level)
 
     if output is not None:

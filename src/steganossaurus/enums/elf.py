@@ -67,6 +67,7 @@ class ProgramType(Enum):
 
 
 class SectionType(Enum):
+    UNKNOWN = -1
     NULL = 0  # Program header table entry unused.
     PROGBITS = 1  # Program data.
     SYMTAB = 2  # Symbol table.
@@ -111,6 +112,8 @@ class SectionType(Enum):
 
     @classmethod
     def from_int(cls, n: int):
+        if n >= len(cls._list()):
+            return cls.UNKNOWN
         return cls._list()[n]
 
 
