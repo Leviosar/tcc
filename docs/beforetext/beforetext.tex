@@ -1,0 +1,162 @@
+% ---
+% Capa
+% ---
+\imprimircapa
+% ---
+
+% ---
+% Folha de rosto
+% (o * indica que haverá a ficha bibliográfica)
+% ---
+\imprimirfolhaderosto*
+% ---
+
+% ---
+% Inserir a ficha bibliografica
+% ---
+% http://ficha.bu.ufsc.br/
+\begin{fichacatalografica}
+	\includepdf{beforetext/Ficha_Catalografica.pdf}
+\end{fichacatalografica}
+% ---
+
+% ---
+% Inserir folha de aprovação
+% ---
+\begin{folhadeaprovacao}
+	\OnehalfSpacing
+	\centering
+	\imprimirautor\\%
+	\vspace*{10pt}		
+	\textbf{\imprimirtitulo}%
+	\ifnotempty{\imprimirsubtitulo}{:~\imprimirsubtitulo}\\%
+	%		\vspace*{31.5pt}%3\baselineskip
+	\vspace*{\baselineskip}
+	%\begin{minipage}{\textwidth}
+	% ~do~\imprimirprograma~do~\imprimircentro~da~\imprimirinstituicao~para~a~obtenção~do~título~de~\imprimirformacao.
+	Este~\imprimirtipotrabalho~foi julgado adequado para obtenção do Título de “\imprimirformacao” e aprovado em sua forma final pelo~\imprimirprograma. \\
+		\vspace*{\baselineskip}
+	\imprimirlocal, \imprimirdata. \\
+	\vspace*{2\baselineskip}
+	\assinatura{\OnehalfSpacing\imprimircoordenador \\ \imprimircoordenadorRotulo~do Curso}
+	\vspace*{2\baselineskip}
+	\textbf{Banca Examinadora:} \\
+	\vspace*{\baselineskip}
+	\assinatura{\OnehalfSpacing\imprimirorientador \\ \imprimirorientadorRotulo}
+	%\end{minipage}%
+	\vspace*{\baselineskip}
+	\assinatura{Prof.(a) xxxx, Dr(a).\\
+	Avaliador(a) \\
+	Instituição xxxx}
+
+	\vspace*{\baselineskip}
+	\assinatura{Prof.(a) xxxx, Dr(a).\\
+	Avaliador(a) \\
+	Instituição xxxx}
+
+
+\end{folhadeaprovacao}
+% ---
+
+% ---
+% Dedicatória
+% ---
+\begin{dedicatoria}
+	\vspace*{\fill}
+	\noindent
+	\begin{adjustwidth*}{}{5.5cm}     
+		Este trabalho é dedicado a todos que não chegaram aqui comigo.
+	\end{adjustwidth*}
+\end{dedicatoria}
+% ---
+
+% ---
+% Agradecimentos
+% ---
+\begin{agradecimentos}
+	Deixo meus profundos agradecimentos à minha revisora preferida, Maria Eduarda da Luz, por não deixar meus inúmeros erros passarem para o texto final; ao meu orientador Jean Everson Martina que acreditou e confiou na minha proposta inicial; ao meu professor e amigo Rodrigo Ramos Nogueira pelas companhias nas madrugadas de trabalho; e por fim a todos os meus amigos que me ajudaram a construir quem sou hoje. 
+\end{agradecimentos}
+% ---
+
+% ---
+% Epígrafe
+% ---
+\begin{epigrafe}
+	\vspace*{\fill}
+	\begin{flushright}
+		\textit{``Apparently neutral s protest is thoroughly discounted and ignored. Isman hard hit. Blockade issue affects pretext for embargo on by-products, ejecting suets and vegetable oils.''\\
+			(Espião Desconhecido, 19??)}
+	\end{flushright}
+\end{epigrafe}
+% ---
+
+% ---
+% RESUMOS
+% ---
+
+% resumo em português
+\setlength{\absparsep}{18pt} % ajusta o espaçamento dos parágrafos do resumo
+\begin{resumo}
+	\SingleSpacing
+	A esteganografia trabalha embutindo informação dentro de outra e escondendo essa transformação ao olhar de um observador ingênuo, de forma que não seja possível distinguir a mídia original do resultado transformado. Apesar do campo já possuir técnicas consolidadas para lidar com imagens, áudios e outros tipos de mídia, quando trata-se de arquivos de código binário a literatura e o ferramental atual são escassos. Dado esse contexto, esse trabalho propõe o desenvolvimento de uma técnica robusta capaz de inserir informações dentro de um arquivo executável sem alterar a semântica do programa fonte, podendo ser utilizado para aplicações como assinatura digital de software, proteção de direitos autorais e comunicação oculta.
+	
+	\textbf{Palavras-chave}: estegranografia. segurança da informação.
+\end{resumo}
+
+% resumo em inglês
+\begin{resumo}[Abstract]
+	\SingleSpacing
+	\begin{otherlanguage*}{english}
+        Stegranography is the craft of embedding information inside another source of data, hiding it from an external observer. Despite the extensive research on techniques built for image, audio and text steganography, when it comes to using executable files as cover objects the academic productions and tools are scarce. This article aims to develop a new method capable of embedding information inside an executable file without altering the semantics of the source code, allowing application of the technique to generic pieces of software.
+		
+		\textbf{Keywords}: steganography. information security.
+	\end{otherlanguage*}
+\end{resumo}
+
+{%hidelinks
+	\hypersetup{hidelinks}
+	% ---
+	% inserir lista de ilustrações
+	% ---
+	\pdfbookmark[0]{\listfigurename}{lof}
+	\listoffigures*
+	\cleardoublepage
+	% ---
+	
+	% ---
+	% inserir lista de quadros
+	% ---
+	%\pdfbookmark[0]{\listofquadrosname}{loq}
+	%\listofquadros*
+	%\cleardoublepage
+	% ---
+	
+	% ---
+	% inserir lista de tabelas
+	% ---
+	%\pdfbookmark[0]{\listtablename}{lot}
+	%\listoftables*
+	%\cleardoublepage
+	% ---
+	
+	% ---
+	% inserir lista de abreviaturas e siglas (devem ser declarados no preambulo)
+	% ---
+	\imprimirlistadesiglas
+	% ---
+	
+	% ---
+	% inserir lista de símbolos (devem ser declarados no preambulo)
+	% ---
+	%\imprimirlistadesimbolos
+	% ---
+	
+	% ---
+	% inserir o sumario
+	% ---
+	\pdfbookmark[0]{\contentsname}{toc}
+	\tableofcontents*
+	\cleardoublepage
+	
+}%hidelinks
+% ---

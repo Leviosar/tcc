@@ -1,0 +1,47 @@
+% ----------------------------------------------------------
+\chapter{Introdução}
+% ----------------------------------------------------------
+
+Esteganografia é a nomenclatura utilizada para um conjunto de técnicas, inicialmente desenvolvidas para espionagem, que atuam escondendo uma informação dentro de uma outra mídia, de modo que a mídia criada após a manipulação seja visualmente indistinguível da original para um observador externo.
+
+A crescente disseminação de computadores a partir do século 20 recuperou diversas técnicas analógicas de espionagem que predatam a área da computação, adicionando o poder de processamento digital para aprimorar a efetividade e as aplicações de tais técnicas. Notoriamente temos a criptografia como a principal expoente dessa transformação, estando presente na maior parte das aplicações modernas. Apesar de ser o maior caso a criptografia não foi a única área a passar por isso, as técnicas de esteganografia também foram afetadas pela introdução do fator digital \cite{JohnsonJajodia}.
+
+Representações digitais de mídias diversas permitem que a informação seja processada e escondida de formas que uma mídia física por sua natureza não conseguiria suportar, fornecendo uma gama maior de técnicas e aplicações esteganográficas, além de permitir a combinação das técnicas mais modernas de criptografia para esconder uma mensagem cifrada.
+
+As novas técnicas esteganográficas desenvolvidas no meio digital circulam por diversas áreas da computação, nos últimos anos destaca-se o uso no ramo de marcas d'água digitais, onde são inseridas no arquivo informações para ajudar na verificação de sua integridade, autenticidade e dados autorais. Nessas aplicações, os dados embutidos não são necessariamente secretos portanto a invisibilidade nesses casos é apenas uma propriedade opcional do algoritmo e outros fatores surgem como prioridade. Uma dessas novas características que ganham destaque é a capacidade de resistir a ataques de distorção do arquivo, mantendo os dados embutidos seguros de um atacante que queira danificar a integridade do arquivo fonte \cite{9187785}.
+
+\section{Motivação}
+
+Apesar de o comum ser utilizar tais técnicas em imagens, áudios e outros formatos de mídia de uso geral, os mesmos conceitos podem ser aplicados para qualquer formato de arquivo que contenha informação, ajustando ou criando novos algoritmos. Uma aplicação menos explorada atualmente é a esteganografia em arquivos de código binário, que pode ser utilizada para transmissão de mensagens secretas, marcas d'água digitais em software, verificação de integridade e autoria a partir de uma assinatura e até mesmo inclusão de trechos de código alternativo, maliciosos ou não, dentro do programa principal \cite{Weaver}.
+
+Os softwares que consumimos diariamente muitas vezes são compilados em arquivos binários que codificam as linhas de código fonte em instruções binárias compreendidas pelo processador alvo. Esses arquivos compilados também possuem extensões e formatos, sendo os principais formatos utilizados o \emph{Executable Linkable File} (ELF) e \textit{Portable Executable} (PE), sendo que o último possuí diversas versões.
+
+Trabalhos passados já obtiveram resultados no desenvolvimento e validação de técnicas esteganográficas em arquivos binários, notóriamente o projeto Hydan \cite{Hydan} foi um dos precursores ao criar uma técnica para a arquitetura \emph{x86} capaz de incorporar bits de informação em um arquivo na proporção de $\frac{1}{110}$. Em comparação, técnicas que se utilizam de mídias mais suscetíveis como imagens JPEG podem atingir uma eficiência de $\frac{1}{17}$, o que contribui para a aplicação de técnicas de obfuscação dentro do espaço de busca.
+
+Em seguida novas pesquisas foram realizadas em torno da ideia inicial do Hydan, buscando aumentar a taxa de incorporação das técnicas empregadas utilizando-se de heurísticas mais efetivas \cite{ICISC04}, expondo vulnerabilidades contra ataques baseados no espaço de busca pequeno que o algoritmo gera \cite{Wright2020DetectingHS}. Entretanto, as pesquisas da área estão limitadas em dois sentidos: a falta de novas propostas de algoritmos que ampliem a capacidade de codificação por arquivo e a preocupação de tornar as técnicas já existentes disponíveis ao longo de mais plataformas, visto que os trabalhos já desenvolvidos costumam focar exclusivamente na arquitetura x86.
+
+\section{Objetivos}
+
+\subsection{Objetivo Geral}
+
+Tendo em vista a atual escassez de algoritmos específicos para a utilização de arquivos binários de código fonte como estego-objetos em arquiteturas alternativas à x86, esse trabalho se propõe a desenvolver um algoritmo que atenda aos requisitos necessários para esse objetivo, demonstrando que é possível aplicar os mesmos conceitos em outras plataformas.
+
+\subsection{Objetivos Específicos}
+
+\begin{itemize}
+    \item Pesquisar o estado da arte dos algoritmos de esteganografia utilizando arquivos de código compilado como mídia.
+    \item Pesquisar e documentar brechas na arquitetura alvo que permitam a codificação de mensagens dentro de um arquivo compilado.
+    \item Desenvolver um algoritmo que explore as brechas encontradas para aplicar técnicas esteganográficas em código da arquitetura alvo.
+    \item Desenvolver uma aplicação que implemente o algoritmo desenvolvido.
+    \item Disponibilizar a aplicação de forma pública para uso da comunidade e evolução do campo.
+\end{itemize}
+
+\section{Estrutura do Trabalho}
+
+Além do presente capítulo introdutório, este trabalho conta com mais três capítulos, explicados a seguir.
+
+No capítulo 2 são apresentados conceitos gerais para a compreensão da temática do trabalho e seus materiais relacionados. São superficialmente explicados noções e definições basilares sobre esteganografia e obsfucação, contendo um breve histórico da formação e avanço das ideias trabalhadas. Também neste capítulo é apresentada uma introdução sobre arquivos executáveis de código e a arquitetura RISC-V escolhida como alvo do estudo. Ao final é exposta a revisão bibliográfica utilizada como fundamentação para o trabalho.
+
+No capítulo 3 está detalhado o desenvolvimento do trabalho, dividido em duas principais partes. A primeira parte discorre sobre a elaboração teórica do algoritmo proposto, detalhando as escolhas de projeto e aplicando uma análise de complexidade, robustez e eficiência de codificação de informação do método. Já a segunda parte detalha a implementação do algoritmo juntamente com uma aplicação com interface textual para a utilização do algoritmo.
+
+No capítulo 4 são discutidos os resultados da implementação realizada, assim como possibilidades de trabalhos futuros a serem desenvolvidos orbitando o algoritmo desenvolvido.
